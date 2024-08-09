@@ -6,12 +6,12 @@
     header('Content-Type: application/json');
 
     // Consider using a more secure authentication method (e.g., token-based)
-    $username = 'signupapi';
-    //$password = 'nL2Bu33uP54zAgAMdkC4';
-    $password_api = 'J8az&X(4IkuUaOS!8p3R';
+    $username = 'user';
+    //$password = '';
+    $password_api = 'password';
 
-    //$username = 'chba';
-    //$password = 'ChAnGeMe!1';
+    //$username = '';
+    //$password = '!1';
 
     //This is the endpoint that MA provides to create a new Affiliate
     //$apiEndpoint = $api_link . '/feeds.php?FEED_ID=26';
