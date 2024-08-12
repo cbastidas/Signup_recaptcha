@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<base href="http://localhost/netrefer-api/">
+	<base href="https://signup.neataffiliates.com/"> 
 	<title>Sign Up - NeatAffiliates</title>
 	<link href="https://fonts.googleapis.com/css?family=Barlow:500,700&display=swap" rel="stylesheet">     
 
@@ -27,6 +27,7 @@
 	<script src="assets/js/scripts.js"></script>
 </head>
 <?php
+
 	$brand_group = (isset($_GET['brand_group']) && $_GET['brand_group'] != "")?$_GET['brand_group']:2;
 	$brand_id = (isset($_GET['brand_id']) && $_GET['brand_id'] != "")?$_GET['brand_id']:"";
 
@@ -158,13 +159,16 @@
 			<div class="row">
 				<div class="col-sm-11 col-md-10 col-lg-9 m-auto p-5 signup-box">
 					<form id="signup--register-form" novalidate>
-						<input type="hidden" name="api_link" value="<?= $api_link; ?>" />
+						<!--https://admin.throneneataffiliates.com -->
+						<input type="hidden" name="api_link" value="<?= "https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26"; ?>" />
 						<div class="row">
 							<div class="col-md-6 mb-5 signup--partner-field-container">
-								<label class="signup--partner-label mr-3" for="email"><b><span class="reqStar">*</span> Login Username</b></label>
+								<label class="signup--partner-label mr-3" for="email"><b><span class="reqStar">*</span> Login Username</b><br></br>(Without Spaces)</label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" type="text" id="signup_username" name="PARAM_username" required />
-									<div class="invalid-feedback"></div>
+									<!--Validation (Aug2024) -->
+									<div id="errorUsername" class="invalid-feedback">Insert a Login Username</div>
+									<div id="errorSpaces" class="invalid-feedback">Name shouldn't contain spaces</div>
 								</div>
 							</div>
 						</div>
@@ -173,8 +177,9 @@
 							<div class="col-md-6 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3" for="email"><b><span class="reqStar">*</span> Email address</b></label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="email" id="email" name="PARAM_email" required />
-									<div class="invalid-feedback"></div>
+									<input class="form-control" type="email" id="email" name="PARAM_email" autocomplete="username" required />
+									<!--Validation (Aug2024) -->
+									<div id="errorEmail" class="invalid-feedback">Insert a valid email Address</div>
 								</div>
 							</div>
 
@@ -182,8 +187,13 @@
 								<label class="signup--partner-label mr-3" for="password"><b><span class="reqStar">*</span> Login password</b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" id="sign-up-password" type="password" name="PARAM_password" autocomplete="new-password" required />
-									<div class="invalid-feedback">
-										The password must match.
+									<!--Validation (Aug2024) -->
+									<div id="errorPassword" class="invalid-feedback">
+										Insert your password
+									</div>
+
+									<div id="errorPasswordPattern" class="invalid-feedback">
+										Password should contain at least 6 characters, mixing Upper, Lower Case and numbers 
 									</div>
 								</div>
 							</div>
@@ -192,14 +202,18 @@
 								<label class="signup--partner-label mr-3" for="passwordconf"><b><span class="reqStar">*</span> Confirm password</b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" id="passwordconf" type="password" name="passwordconf" autocomplete="new-password" required />
+									<!--Validation (Aug2024) -->
+									<div id="errorPasswordMatch" class="invalid-feedback">
+										Password must match
+									</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3" for="country"><b><span class="reqStar">*</span> Country</b></label>
 								<div class="signup--partner-input-container">
-									<select class="form-select" id="country" name="PARAM_country" required>
-										<option value="">Select one</option>
+									<select class="form-select is-invalid" id="country" name="PARAM_country" required >
+										<option value="default">Select a country</option>
 										<option value="AF"> Afghanistan </option>
 										<option value="AL"> Albania </option>
 										<option value="DZ"> Algeria </option>
@@ -451,9 +465,12 @@
 										<option value="ZW"> Zimbabwe </option>
 										<option value="AX"> Åland Islands </option>
 									</select>
-									<div class="invalid-feedback"></div>
+									<div id="emptyCountry" class="invalid-feedback">You must select a Country</div>
+									<br></br>
 								</div>
 							</div>
+
+							
 
 							<div class="col-md-8 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3">
@@ -477,7 +494,8 @@
 								<label class="signup--partner-label mr-3" for="first_name"><b><span class="reqStar">*</span> First Name</b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" type="text" id="first_name" name="PARAM_first_name" required />
-									<div class="invalid-feedback"></div>
+									<!--Validation (Aug2024) -->
+									<div id="errorFirstName" class="invalid-feedback">Insert your First Name</div>
 								</div>
 							</div>
 
@@ -485,15 +503,16 @@
 								<label class="signup--partner-label mr-3" for="last_name"><b><span class="reqStar">*</span> Last Name</b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" type="text" id="last_name" name="PARAM_last_name" required />
-									<div class="invalid-feedback"></div>
+									<!--Validation (Aug2024) -->
+									<div id="errorLastName" class="invalid-feedback">Insert your Last Name</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-5 signup--partner-field-container">
-								<label class="signup--partner-label mr-3" for="date_of_birth"><b>Date of birth</b></label>
+								<label class="signup--partner-label mr-3" for="date_of_birth"><b><span class="reqStar">*</span>Date of birth</b></label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="date_of_birth" placeholder="YYYY-MM-DD" name="PARAM_date_of_birth" />
-									<div class="invalid-feedback"></div>
+									<input class="form-control" type="text" id="date_of_birth" placeholder="YYYY-MM-DD" name="PARAM_date_of_birth" required/>
+									<div id="errorDateofBirth" class="invalid-feedback">Insert Date of Birth</div>
 								</div>
 							</div>
 
@@ -501,14 +520,15 @@
 								<label class="signup--partner-label mr-3" for="skype_aim"><b><span class="reqStar">*</span> Skype</b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" type="text" id="skype_aim" name="PARAM_skype_aim" required />
-									<div class="invalid-feedback"></div>
+									<!--Validation (Aug2024) -->
+									<div id="errorSkype" class="invalid-feedback">Insert a valid Skype Account</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3" for="address"><b>Address</b></label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="address" name="PARAM_address" />
+									<input class="form-control" type="text" id="address" name="PARAM_address"/>
 									<div class="invalid-feedback"></div>
 								</div>
 							</div>
@@ -532,8 +552,7 @@
 							<div class="col-md-6 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3" for="company"><b>Company Name</b></label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="company" name="PARAM_company" />
-									<div class="invalid-feedback"></div>
+									<input class="form-control" type="text" id="company" name="PARAM_company"/>
 								</div>
 							</div>
 
@@ -541,15 +560,20 @@
 								<label class="signup--partner-label mr-3" for="mobile"><b><span class="reqStar">*</span> Mobile Number </b></label>
 								<div class="signup--partner-input-container">
 									<input class="form-control" type="text" id="mobile" name="PARAM_mobile" required />
-									<div class="invalid-feedback"></div>
+									<!--Validation (Aug2024) -->
+									<div id="errorMobileNumber" class="invalid-feedback">Insert a valid Mobile number</div>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-5 signup--partner-field-container">
-								<label class="signup--partner-label mr-3" for="website"><b>Site URL</b></label>
+								<label class="signup--partner-label mr-3" for="website">
+									<span class="reqStar font-size: 20px" >*</span>
+									<b>Site URL</b>
+								</label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="website" name="PARAM_website" />
-									<div class="invalid-feedback"></div>
+									<input class="form-control" type="text" id="website" name="PARAM_website" required />
+									<!--Validation (Aug2024) -->
+									<div id="errorUrl" class="invalid-feedback">Insert a valid URL</div>
 								</div>
 							</div>
 
@@ -577,15 +601,21 @@
 								<div class="form-group">
 									<label class="signup--partner-label mr-3" for="termsagreement">
 										<input id="termsagreement" class="form-control" type="checkbox" name="PARAM_termsagreement" value="1" required /> I agree to the terms and conditions 
+										<!--Validation (Aug2024) -->
+										<div id="errorTerms" class="invalid-feedback">Must agree with Terms and Conditions</div>
 									</label>
 								</div>
 							</div>
+
 
 							<div class="col-12 col-sm-6">
 								<button class="btn-signup">Sign up</button>
 							</div>
 						</div>
+
+						
 					</form>
+
 				</div>
 			</div>
 		</div>
@@ -614,6 +644,241 @@
 					event.preventDefault();
 					event.stopPropagation();
 
+					//VALIDATIONS OF THE FORM
+					//.........................
+					//Username Validation
+					var loginSelect = document.getElementById('signup_username').value.trim();
+					var errorLoginMessage = document.getElementById('errorUsername');
+					var errorSpacesMessage = document.getElementById('errorSpaces');
+					
+					errorLoginMessage.style.display  = 'none';
+					errorSpacesMessage.style.display  = 'none';
+
+					if (loginSelect === ''){
+						event.preventDefault();	
+						window.scrollTo(0, 0);
+						errorLoginMessage.style.display  = 'block';
+						errorSpacesMessage.style.display  = 'none';
+					}
+
+					else {
+						errorLoginMessage.style.display  = 'none';
+
+						if (loginSelect.indexOf(' ') !== -1){
+							event.preventDefault();	
+							window.scrollTo(0, 0);
+							errorSpacesMessage.style.display  = 'block';
+						}
+						else {
+							errorSpacesMessage.style.display  = 'none';
+						}
+					}
+
+					//here finish the Username Validation
+					
+					//..........................
+					//email Validation
+					var emailSelect = document.getElementById('email');
+					var errorEmailMessage = document.getElementById('errorEmail');
+					if(emailSelect.value.trim() === ''){
+					   event.preventDefault();	
+					   window.scrollTo(0, 0);
+					   errorEmailMessage.style.display  = 'block';
+					}
+
+					else {
+						errorEmailMessage.style.display  = 'none';
+					}
+					//Here finish the email Validation
+					
+
+					//..........................
+					//password validation
+					let passwordSelect = document.getElementById('sign-up-password');
+					let errorPasswordMessage = document.getElementById('errorPassword');
+					let passwordPatternError = document.getElementById('errorPasswordPattern');
+					let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+					errorPasswordMessage.style.display = 'none';
+					passwordPatternError.style.display = 'none';
+
+					if(passwordSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorPasswordMessage.style.display  = 'block';
+						passwordPatternError.style.display = 'none';
+					}
+
+					else {
+						errorPasswordMessage.style.display  = 'none';
+						
+						if (!passwordPattern.test(passwordSelect.value)) {
+							event.preventDefault();
+							passwordPatternError.style.display = 'block';
+							errorPasswordMessage.style.display  = 'none';
+							window.scrollTo(0, 0);
+							return false;
+						}
+						else {
+							passwordPatternError.style.display = 'none';
+							errorPasswordMessage.style.display = 'none';
+							//return true;
+						}
+					}
+
+					//Here finish the password validation
+
+					//..........................
+					//passwordMatch validation
+					var passwordMatchSelect = document.getElementById('passwordconf');
+					var errorpasswordMatchMessage = document.getElementById('errorPasswordMatch');
+
+					if(passwordMatchSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorpasswordMatchMessage.style.display  = 'block';
+					}
+					
+					else if (passwordSelect.value !== passwordMatchSelect.value){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorpasswordMatchMessage.style.display = 'block';
+					}
+					else {
+						errorpasswordMatchMessage.style.display  = 'none';
+					}
+					//Here finish the passwordMatch validation
+
+					//PasswordMatching Confirmation Validation
+					if (passwordSelect !== '' && passwordMatchSelect !== '' && !passwordsMatch()){
+							event.preventDefault();
+							window.scrollTo(0, 0);
+							errorpasswordMatchMessage.style.display  = 'block';
+						}
+						else {
+							errorpasswordMatchMessage.style.display  = 'none';
+						}
+					//Here finish the passwordMatching Confirmation Validation
+					
+					//..........................
+					//Country Selection Validation
+					var countrySelect = document.getElementById('country');
+					var errorCountryMessage = document.getElementById('emptyCountry');
+
+					if(countrySelect.value === 'default') {
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorCountryMessage.style.display = 'block';
+					}
+					else {
+						errorCountryMessage.style.display = 'none';
+					}
+					//here finish the Country Selection Validation
+
+					//..........................
+					//First Name Validation
+					var firstNameSelect = document.getElementById('first_name');
+					var errorFirstNameMessage = document.getElementById('errorFirstName');
+					if(firstNameSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorFirstNameMessage.style.display  = 'block';
+					}
+
+					else {
+						errorFirstNameMessage.style.display  = 'none';
+					}
+					//Here finish the First Name validation
+
+					//..........................
+					//Last Name Validation
+					var lastNameSelect = document.getElementById('last_name');
+					var errorLastNameMessage = document.getElementById('errorLastName');
+					if(lastNameSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorLastNameMessage.style.display  = 'block';
+					}
+
+					else {
+						errorLastNameMessage.style.display  = 'none';
+					}
+					//Here finish the Last Name validation
+					
+					//Date of Birth Validation
+					var dateofBirth = document.getElementById('date_of_birth');
+					var errorDateofBirthMessage = document.getElementById('errorDateofBirth');
+					if (dateofBirth.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorDateofBirthMessage.style.display = 'block';
+					}
+					else {
+						errorDateofBirthMessage.style.display = 'none';
+					}
+					//Here finish the Date of Birth Validation
+
+					//..........................
+					//skype Validation
+					var skypeSelect = document.getElementById('skype_aim');
+					var errorSkypeMessage = document.getElementById('errorSkype');
+					if(skypeSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorSkypeMessage.style.display  = 'block';
+					}
+
+					else {
+						errorSkypeMessage.style.display  = 'none';
+					}
+					//Here finish the skype validation
+
+					//..........................
+					//mobile number Validation
+					var mobileNumberSelect = document.getElementById('mobile');
+					var errorMobileNumberMessage = document.getElementById('errorMobileNumber');
+					if(mobileNumberSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorMobileNumberMessage.style.display  = 'block';
+					}
+
+					else {
+						errorMobileNumberMessage.style.display  = 'none';
+					}
+					//Here finish the mobile number validation
+
+					//..........................
+					//site URL Validation
+					var urlSelect = document.getElementById('website');
+					var errorUrlMessage = document.getElementById('errorUrl');
+					if(urlSelect.value.trim() === ''){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorUrlMessage.style.display  = 'block';
+					}
+
+					else {
+						errorUrlMessage.style.display  = 'none';
+					}
+					//Here finish the site URL validation
+
+					//..........................
+					//Terms and Conditions Validation
+					var termsSelect = document.getElementById('termsagreement');
+					var errorTermsMessage = document.getElementById('errorTerms');
+					if(!termsSelect.checked){
+						event.preventDefault();
+						window.scrollTo(0, 0);
+						errorTermsMessage.style.display  = 'block';
+					}
+
+					else {
+						errorTermsMessage.style.display  = 'none';
+					}
+					//Here finish the Terms and Conditions Validation
+				
+
+					//Here to validate Password Matching and the Validity of the Data
 					if (this.checkValidity() && passwordsMatch()) {
 						let formData = {};
 
@@ -627,9 +892,13 @@
 						let validated = validateFormat(formData);
 						//let validated = true;
 
+						
 						if (validated) {
-							//Only Change this URL
-							let url = '/netrefer-api/proxy/post.php';
+							//This takes the endpoint from the post.php and makes a POST request
+							let url = '/proxy/post.php';
+							//let url = 'feeds.php?FEED_ID=26';
+							//let url = 'https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26';
+							//let url = '/netrefer-api/proxy/post.php';
 
 							$.ajax({
 								type: 'POST',
@@ -637,23 +906,35 @@
 								data: formData,
 								url: url,
 								contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-								success: function (response) {
+								success: function(response) {
 									console.log(response)
 									if (response.success) {
-										// Clear form inputs
+                    					$('#message').text('Your signup was successfull');
+                    					
+										//// Clear form inputs
 							            $('#signup--register-form').find(':input').val('');
 //
-							            // Remove validation classes
+							            //// Remove validation classes
 							            $('#signup--register-form').removeClass('was-validated');
 							            $('#signup--register-form').find('.is-invalid').removeClass('is-invalid');
 //
-							            // Display success message (replace with your desired message)
-							            $('#signup--register-form').prepend('<div class="alert alert-success text-center">Thank you! Your Subscription Was Successful!</div>');
-									} else {
+							            //// Display success message (replace with your desired message)
+							        
+										$('#signup--register-form').prepend('<div class="alert alert-success text-center">Thank you! Your Signup Was Successful!</div>');
+										window.scrollTo(0, 0);
+										//setTimeout(function() {
+                        				//	window.location.href = 'https://thrnaffpanel.thrnaffcdn.com/signin.php';
+                    					//}, 2000);
+									} else if (response.error_code == 400){
+										$('#signup--register-form').prepend('<div class="alert alert-failed text-center">Verify the data and try again</div>');
+										window.scrollTo(0, 0);
+									}
+									else 
+									{
 										let inputs = response.data;
-//
+
 										$('#signup--register-form').removeClass('was-validated');
-//
+
 										for (const key in inputs) {
 											$(`[name="${key}"]`).addClass('is-invalid');
 											$(`[name="${key}"]`).next('.invalid-feedback').text(inputs[key]);
@@ -666,7 +947,7 @@
 					} else {
 						// Add 'was-validated' class to the form
 						$(this).addClass('was-validated');
-
+						event.preventDefault();
 						// Highlight incorrect inputs with 'is-invalid' class
 						$(this).find(':invalid').addClass('is-invalid');
 					}
@@ -676,12 +957,11 @@
 				 * Validate that the passwords match
 				 */
 				function passwordsMatch() {
-					var password = $('#sign-up-password').val();
+					var passwordValidation = $('#sign-up-password').val();
 					var confirmPassword = $('#passwordconf').val();
-
-					return password === confirmPassword;
+					return passwordValidation === confirmPassword;
 				}
-
+			
 				/**
 				 * Validate the input format based on API regex
 				 * */
@@ -725,7 +1005,7 @@
 							message: 'Please accept terms and conditions'
 						},
 						PARAM_website: {
-							pattern: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/,
+							pattern: /^[\sa-zA-Z0-9.-]{2,49}$/,
 							message: 'Use a valid URL',
 							required: false
 						},
@@ -756,10 +1036,9 @@
 
 					return validationSuccess;
 				}
-
-				/**
-				 * Add the required attribute dynamically to each text area on the payments section
-				 * */
+				/*
+				 Add the required attribute dynamically to each text area on the payments section
+				 */
 				function addRequiredAttribute(removeAttrID, addAttrID) {
 					let textareaNotRequiredFields = document.querySelectorAll(`${removeAttrID} textarea`);
 					textareaNotRequiredFields.forEach(function (textarea) {
@@ -773,6 +1052,8 @@
 				}
 			});
 		})(jQuery);
+		
+	
 	</script>
 	<?php include_once('./inc/footer.php'); ?>
 </body>
