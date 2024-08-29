@@ -1,15 +1,15 @@
 <?php
     $data = $_POST;
-    $recaptchaSecret = '6LfX5zAqAAAAAAjHv1VYaQsSG8On1h96yurKJxWe';
+    $recaptchaSecret = 'Your/site/key';
     $recaptchaResponse = $data['g-recaptcha-response'];
     $api_link = $data['api_link'];
     unset($data['api_link']);
 
 
     // Consider using a more secure authentication method (e.g., token-based)
-    $username = 'signupapi';
+    $username = 'user';
     //$password = '';
-    $password_api = 'J8az&X(4IkuUaOS!8p3R';
+    $password_api = 'password';
 
     //$username = '';
     //$password = '!1';
