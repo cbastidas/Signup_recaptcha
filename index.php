@@ -13,20 +13,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<!-- <base href="https://signup.neataffiliates.com/"> -->
-	<base href="/localhost/netrefer-api-reCAPTCHA/"> 
+	<!-- <base href="https://signup.neataffiliates.com/"> --> 
+	<base href="/localhost/netrefer-api-Backup-2908/"> 
 	<title>Sign Up - NeatAffiliates</title>
 	<link href="https://fonts.googleapis.com/css?family=Barlow:500,700&display=swap" rel="stylesheet">     
 
-	<link rel="stylesheet" href="/netrefer-api-reCAPTCHA/assets/css/style.css">
-	<script src="/netrefer-api-reCAPTCHA/assets/js/modernizr-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="/netrefer-api-Backup-2908/assets/css/style.css">
+	<script src="/netrefer-api-Backup-2908/assets/js/modernizr-3.6.0.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script>window.jQuery || document.write('<script src="assets/js/jquery-3.3.1.min.js"><\/script>')</script>
-	<script src="/netrefer-api-reCAPTCHA/assets/js/plugins.js"></script>
-	<script src="/netrefer-api-reCAPTCHA/assets/js/bootstrap.min.js"></script>
-	<script src="/netrefer-api-reCAPTCHA/assets/js/scripts.js"></script>
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script src="/netrefer-api-Backup-2908/assets/js/plugins.js"></script>
+	<script src="/netrefer-api-Backup-2908/assets/js/bootstrap.min.js"></script>
+	<script src="/netrefer-api-Backup-2908/assets/js/scripts.js"></script>
 </head>
 <?php
 
@@ -160,7 +159,7 @@
 
 			<div class="row">
 				<div class="col-sm-11 col-md-10 col-lg-9 m-auto p-5 signup-box">
-					<form id="signup--register-form" action="post.php" method="POST" novalidate>
+					<form id="signup--register-form" novalidate>
 						<!--https://admin.throneneataffiliates.com -->
 						<input type="hidden" name="api_link" value="<?= "https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26"; ?>" />
 						<div class="row">
@@ -609,10 +608,6 @@
 								</div>
 							</div>
 
-							<div class="col-12 col-sm-6">
-							<div id="g-recaptcha" class="g-recaptcha" data-sitekey="6LfX5zAqAAAAALtBCjlAaQGTtX1iE3tKV_kJjywc"></div>
-							<div id="errorReCaptcha" class="invalid-feedback">Must validate recaptcha</div>
-							</div>
 
 							<div class="col-12 col-sm-6">
 								<button class="btn-signup">Sign up</button>
@@ -631,8 +626,6 @@
 		(function ($) {
 			$(document).ready(function () {
 				let previousSelectedPayment = 0;
-
-
 
 				$('.signup--payment-option').on('change', function () {
 					if (previousSelectedPayment !== this.value) {
@@ -724,6 +717,7 @@
 							passwordPatternError.style.display = 'block';
 							errorPasswordMessage.style.display  = 'none';
 							window.scrollTo(0, 0);
+							return false;
 						}
 						else {
 							passwordPatternError.style.display = 'none';
@@ -883,20 +877,6 @@
 						errorTermsMessage.style.display  = 'none';
 					}
 					//Here finish the Terms and Conditions Validation
-
-					//reCAPTCHA
-					var errorCaptcha = document.getElementById('g-recaptcha');
-					var errorCaptchaMessage = document.getElementById('errorReCaptcha');
-					if(!errorCaptcha.checked){
-						event.preventDefault();
-						window.scrollTo(0, 0);
-						errorCaptchaMessage.style.display  = 'block';
-					}
-
-					else {
-						errorCaptchaMessage.style.display  = 'none';
-					}
-					//Here finishes reCAPTCHA
 				
 
 					//Here to validate Password Matching and the Validity of the Data
@@ -916,7 +896,7 @@
 						
 						if (validated) {
 							//This takes the endpoint from the post.php and makes a POST request
-							let url = '/netrefer-api-reCAPTCHA/proxy/post.php';
+							let url = '/proxy/post.php';
 							//let url = 'feeds.php?FEED_ID=26';
 							//let url = 'https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26';
 							//let url = '/netrefer-api/proxy/post.php';
@@ -947,9 +927,8 @@
                         				//	window.location.href = 'https://thrnaffpanel.thrnaffcdn.com/signin.php';
                     					//}, 2000);
 									} else if (response.error_code == 400){
-										$('#signup--register-form').prepend('<div class="alert alert-failed text-center">'+ response.message + '</div>');
+										$('#signup--register-form').prepend('<div class="alert alert-failed text-center">Verify the data and try again</div>');
 										window.scrollTo(0, 0);
-										
 									}
 									else 
 									{
