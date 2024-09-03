@@ -13,19 +13,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<!-- <base href="https://signup.neataffiliates.com/"> --> 
-	<base href="/localhost/netrefer-api-Backup-2908/"> 
+	<base href="https://signup.neataffiliates.com/"> 
 	<title>Sign Up - NeatAffiliates</title>
 	<link href="https://fonts.googleapis.com/css?family=Barlow:500,700&display=swap" rel="stylesheet">     
 
-	<link rel="stylesheet" href="/netrefer-api-Backup-2908/assets/css/style.css">
-	<script src="/netrefer-api-Backup-2908/assets/js/modernizr-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="assets/css/style.css">
+	<script src="assets/js/modernizr-3.6.0.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script>window.jQuery || document.write('<script src="assets/js/jquery-3.3.1.min.js"><\/script>')</script>
-	<script src="/netrefer-api-Backup-2908/assets/js/plugins.js"></script>
-	<script src="/netrefer-api-Backup-2908/assets/js/bootstrap.min.js"></script>
-	<script src="/netrefer-api-Backup-2908/assets/js/scripts.js"></script>
+	<script src="assets/js/plugins.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/scripts.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js?render=6LfxizQqAAAAAHkef_jZCxUzGL-guIH2DUI0HX_p"></script>
+
 </head>
 <?php
 
@@ -159,14 +160,14 @@
 
 			<div class="row">
 				<div class="col-sm-11 col-md-10 col-lg-9 m-auto p-5 signup-box">
-					<form id="signup--register-form" novalidate>
+					<form id="signup--register-form" action="post.php" method="POST" novalidate>
 						<!--https://admin.throneneataffiliates.com -->
 						<input type="hidden" name="api_link" value="<?= "https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26"; ?>" />
 						<div class="row">
 							<div class="col-md-6 mb-5 signup--partner-field-container">
 								<label class="signup--partner-label mr-3" for="email"><b><span class="reqStar">*</span> Login Username</b><br></br>(Without Spaces)</label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="signup_username" name="PARAM_username" required />
+									<input class="form-control " type="text" id="signup_username" name="PARAM_username" required />
 									<!--Validation (Aug2024) -->
 									<div id="errorUsername" class="invalid-feedback">Insert a Login Username</div>
 									<div id="errorSpaces" class="invalid-feedback">Name shouldn't contain spaces</div>
@@ -474,7 +475,7 @@
 							
 
 							<div class="col-md-8 mb-5 signup--partner-field-container">
-								<label class="signup--partner-label mr-3">
+								<label class="signup--partner-label mr-3 ">
 									<b>Email mailout subscription</b><br />
 									<small>Send me newsletters and promotional emails.</small>
 								</label>
@@ -572,7 +573,7 @@
 									<b>Site URL</b>
 								</label>
 								<div class="signup--partner-input-container">
-									<input class="form-control" type="text" id="website" name="PARAM_website" required />
+									<input class="form-control" type="text" id="website" name="PARAM_website" placeholder="www.example.com" required />
 									<!--Validation (Aug2024) -->
 									<div id="errorUrl" class="invalid-feedback">Insert a valid URL</div>
 								</div>
@@ -607,11 +608,14 @@
 									</label>
 								</div>
 							</div>
-
-
+							
 							<div class="col-12 col-sm-6">
-								<button class="btn-signup">Sign up</button>
+							<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 							</div>
+							<div class="col-12 col-sm-6">
+								<button type="submit" class="btn-signup">Sign up</button>
+							</div>
+
 						</div>
 
 						
@@ -623,6 +627,12 @@
 	</section>
 
 	<script>
+		grecaptcha.ready(function() {
+    	grecaptcha.execute('6LfxizQqAAAAAHkef_jZCxUzGL-guIH2DUI0HX_p', {action: 'submit'}).then(function(token) {
+        document.getElementById('recaptchaResponse').value = token;
+    		});
+		});
+
 		(function ($) {
 			$(document).ready(function () {
 				let previousSelectedPayment = 0;
@@ -900,59 +910,105 @@
 							//let url = 'feeds.php?FEED_ID=26';
 							//let url = 'https://admin.throneneataffiliates.com/feeds.php?FEED_ID=26';
 							//let url = '/netrefer-api/proxy/post.php';
-
+							console.log(formData);
 							$.ajax({
-								type: 'POST',
-								dataType: 'JSON',
-								data: formData,
-								url: url,
-								contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-								success: function(response) {
-									console.log(response)
-									if (response.success) {
-                    					$('#message').text('Your signup was successfull');
-                    					
-										//// Clear form inputs
-							            $('#signup--register-form').find(':input').val('');
-//
-							            //// Remove validation classes
-							            $('#signup--register-form').removeClass('was-validated');
-							            $('#signup--register-form').find('.is-invalid').removeClass('is-invalid');
-//
-							            //// Display success message (replace with your desired message)
-							        
-										$('#signup--register-form').prepend('<div class="alert alert-success text-center">Thank you! Your Signup Was Successful!</div>');
-										window.scrollTo(0, 0);
-										//setTimeout(function() {
-                        				//	window.location.href = 'https://thrnaffpanel.thrnaffcdn.com/signin.php';
-                    					//}, 2000);
-									} else if (response.error_code == 400){
-										$('#signup--register-form').prepend('<div class="alert alert-failed text-center">Verify the data and try again</div>');
-										window.scrollTo(0, 0);
-									}
-									else 
-									{
-										let inputs = response.data;
+						    type: 'POST',
+						    dataType: 'JSON',
+						    data: formData,
+						    url: url,
+						    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						    success: function(response) {
+						        console.log(response);
+								$('#signup--register-form').find('.alert').remove(); // Delete the previous messages
+    							$('#signup--register-form').find('.is-invalid').removeClass('is-invalid'); // Delete the validation classes
+							
+						        if (response.success) {
+						            $('#message').text('Your signup was successful');
+								
+						            // Clear form inputs
+						            $('#signup--register-form').find(':input').val('');
+								
+						            // Remove validation classes
+						            $('#signup--register-form').removeClass('was-validated');
+						            $('#signup--register-form').find('.is-invalid').removeClass('is-invalid');
+								
+						            // Display success message
+						            $('#signup--register-form').prepend('<div class="alert alert-success text-center">Thank you! Your Signup Was Successful!</div>');
+						            window.scrollTo(0, 0);
+								
+						            // Optionally redirect after success
+						            // setTimeout(function() {
+						            //     window.location.href = 'https://thrnaffpanel.thrnaffcdn.com/signin.php';
+						            // }, 2000);
+								
+						        } else {
+						            // Clear previous error messages
+						           //$('#signup--register-form').find('.alert').remove();
+									let parser = new DOMParser();
+							        let xmlDoc = parser.parseFromString(response.message, "text/xml");
 
-										$('#signup--register-form').removeClass('was-validated');
+							        // Obtener los errores del XML
+							        let errors = xmlDoc.getElementsByTagName("ERROR");
 
-										for (const key in inputs) {
-											$(`[name="${key}"]`).addClass('is-invalid');
-											$(`[name="${key}"]`).next('.invalid-feedback').text(inputs[key]);
-										}
-									}
-								},
-								error: function () {}
-							});
-						}
-					} else {
+							        // Generar mensajes de error y asignarlos a los campos
+							        for (let i = 0; i < errors.length; i++) {
+							            let detail = errors[i].getAttribute("DETAIL");
+							            let msg = errors[i].getElementsByTagName("MSG")[0].textContent;
+										let field = $(`[name="${detail}"]`);
+            							if (field.length > 0) {
+            							    // Mostrar el mensaje de error al lado del campo correspondiente
+            							    field.addClass('is-invalid');
+            							    field.next('.invalid-feedback').text(msg);
+            							} else {
+            							    // Si el campo no existe, mostrar un mensaje general
+            							    console.warn(`El campo con nombre "${detail}" no se encontró en el formulario.`);
+            							    $('#signup--register-form').prepend(`<div class="alert alert-danger">${msg}</div>`);
+            							}
+							        }
+							        // Desplazar hacia arriba para que el usuario vea los mensajes
+							        window.scrollTo(0, 0);
+							    }
+							},
+
+						            // Display general error message
+						           //if (response.error_code == 400) {
+						           //    $('#signup--register-form').prepend('<div class="alert alert-failed text-center">'+ response.message + '</div>');
+						           //} else {
+									//	window.scrollTo(0, 0);
+									//	
+									//
+
+						           //    //for (const key in errorMessages) {
+									//	//	let errorMessage = errorMessages[key];
+						           //    //    errorList += '<li>${errorMessage}</li>';
+									//	//
+						           //    //    // Highlight the input field with error
+						           //    //    $(`[name="${key}"]`).addClass('is-invalid');
+									//	//
+						           //    //    // Display error message next to the input field
+						           //    //    $(`[name="${key}"]`).next('.invalid-feedback').text(errorMessage);
+						           //    //}
+									//	//errorList += '</ul>';
+            						//	$('#signup--register-form').prepend(`<div class="alert alert-danger">${errorList}</div>`);
+						           //}
+									//$('#signup--register-form').prepend(`<div class="alert alert-failed alert-danger">${errorMessageHTML}</div>`);
+						           //window.scrollTo(0, 0);
+						    error: function() {
+						        $('#signup--register-form').prepend('<div class="alert alert-failed alert-danger text-center">An unexpected error occurred. Please try again later.</div>');
+								window.scrollTo(0, 0);
+						    }
+						});//ajax
+
+						} //Validated
+					} // checkvalidity
+					else { //Else Validated
 						// Add 'was-validated' class to the form
 						$(this).addClass('was-validated');
 						event.preventDefault();
 						// Highlight incorrect inputs with 'is-invalid' class
 						$(this).find(':invalid').addClass('is-invalid');
-					}
-				});
+					}// else validated
+				}); //signup register form
 
 				/**
 				 * Validate that the passwords match
